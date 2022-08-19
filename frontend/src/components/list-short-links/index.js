@@ -11,7 +11,7 @@ export const ListShortLinks = ({ shortlinks }) => {
           <div id="ListOfShortlinks">
             <h4>shortlinks List</h4>
             {shortlinks.map((short) => (
-              <pre key={`${short.slug}${short.ios}`}>
+              <pre key={`${short.slug}${short.ios.primary}${short.android.primary}`}>
                 <code>
                   <span className="hljs-attribute">slug </span>: <span className="hljs-string">{short.slug} </span><br></br>
                   <span className="hljs-attribute">ios </span>: <br></br>

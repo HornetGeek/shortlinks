@@ -1,4 +1,5 @@
 # using flask_restful
+from curses import init_color
 import json
 from unittest import result
 from flask import Flask, jsonify, request
@@ -24,10 +25,10 @@ class shortlinks(Resource):
     # this function is called whenever there
     # is a GET request for this resource
     def get(self):
-        all  = list(mongo.db.shortlinks.find())
+        all  = mongo.db.shortlinks.find()
         if (len(list(mongo.db.shortlinks.find())) == 0):
             return jsonify({'data': []})
-        
+
         return json.loads(json_util.dumps(all))
   
     # Corresponds to POST request
@@ -66,15 +67,16 @@ class shortlinks_slug(Resource):
         if(len(list(mongo.db.shortlinks.find({'slug':slug}))) == 0):
             return jsonify({'error': "slug doesn't found"})
         return_data = {}
-        for d in data:
-            if d == "slug":
-                if data[str(d)] != slug:
+        for prim_key in data:
+            if prim_key == "slug":
+                if data[str(prim_key)] != slug:
                     return {'Error': "the slug is readonly once it’s been created, this means it can’t be update."},403
 
             return_data = mongo.db.shortlinks.find_one_and_update(
                 {"slug":slug},
-                {"$set":{d:data[str(d)]}}
+                {"$set":{prim_key:data[str(prim_key)]}}
             )
+
         return_data = json.loads(json_util.dumps(return_data))
         del return_data["_id"]
         return jsonify(return_data)

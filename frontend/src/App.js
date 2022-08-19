@@ -1,8 +1,6 @@
-import ReactDOM from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
 
 import { ListShortLinks } from './components/list-short-links';
-import logo from './logo.svg';
 import './App.css';
 import { Form } from './components/form';
 import { Button } from './components/button';
@@ -14,18 +12,16 @@ function App() {
   const [shortLinks, setShortLinks] = useState([]);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({});
-  const [currentAction, setCurrentAction] = useState('')
-
+  const [currentAction, setCurrentAction] = useState('');
 
   useEffect(() => {
-    fetch('/shortlinks/').then(res => res.json()).then(data => {
-      setShortLinks(data);
-    });
+    fetch('/shortlinks/').then((res) => res.json()).then((data) => {
+        setShortLinks(data);
+      });
   }, []);
 
   function handleAddSlug() {
-
-    setCurrentAction("add")
+    setCurrentAction('add');
 
     fetch('/shortlinks/', {
       method: 'POST',
@@ -36,18 +32,16 @@ function App() {
       body: JSON.stringify(formData)
     })
     .catch(err => {
-      setError(err)
-    })
+      setError(err);  
+    });
+    
+    setShortLinks([formData, ...shortLinks]);
 
-    setShortLinks([formData, ...shortLinks])
   }
 
   function handleEditSlug() {
-    console.log("BEFORE:::: FORM DATA +>>>", formData)
 
     setCurrentAction("edit")
-
-    console.log("AFTER:::: FORM DATA +>>>", formData)
 
     fetch(`/shortlinks/${formData.slug}`, {
       method: 'PUT',
@@ -59,15 +53,16 @@ function App() {
     })
     .then(json => json.json())
     .then(data => {
-      setShortLinks([data, ...shortLinks])
+        setShortLinks([data, ...shortLinks])
     })
     .catch(err => {
-      setError(err)
+      //setError(err)
+      console.log(err)
     })
   }
 
   return (
-    
+
 
     <div className="d-flex flex-column overflow-y-a h-100">
       <Header />
@@ -80,6 +75,7 @@ function App() {
                 <div className="card rounded-10 bg-g-1 text-dark mb-0">
                   <div className="card-body p-2 p-sm-3">
                     <div data-v-154c538c="" role="dialog">
+                    <h1>{error ? error[0]: console.log(error)}</h1>
 
                       <form data-v-154c538c=""  >
                         <Form handleChange={setFormData} formData={formData} currentAction={currentAction} />
@@ -87,7 +83,6 @@ function App() {
 
                         <Button onClick={handleAddSlug} text="Make SmartShortlink!" />
                         <Button onClick={handleEditSlug} text="Edit Shortlinks" />
-
 
                       </form>
 
