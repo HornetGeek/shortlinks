@@ -1,7 +1,6 @@
-import './style.css'
-
-
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import './style.css';
 
 export const ListShortLinks = ({ shortlinks }) => {
   if (shortlinks[0]) {
@@ -13,22 +12,38 @@ export const ListShortLinks = ({ shortlinks }) => {
             {shortlinks.map((short) => (
               <pre key={`${short.slug}${short.ios.primary}${short.android.primary}`}>
                 <code>
-                  <span className="hljs-attribute">slug </span>: <span className="hljs-string">{short.slug} </span><br></br>
+                  <span className="hljs-attribute">slug </span>:{' '}
+                  <span className="hljs-string">{short.slug} </span>
+                  <br></br>
                   <span className="hljs-attribute">ios </span>: <br></br>
-                  <span className="hljs-attribute"> primary </span>: <span className="hljs-string">{short.ios?.primary} </span><br></br>
-                  <span className="hljs-attribute"> fallback </span>: <span className="hljs-string">{short.ios?.fallback} </span><br></br>
+                  <span className="hljs-attribute"> primary </span>:{' '}
+                  <span className="hljs-string">{short.ios?.primary} </span>
+                  <br></br>
+                  <span className="hljs-attribute"> fallback </span>:{' '}
+                  <span className="hljs-string">{short.ios?.fallback} </span>
+                  <br></br>
                   <span className="hljs-attribute">android </span>:<br></br>
-                  <span className="hljs-attribute"> primary </span>: <span className="hljs-string">{short.android?.primary} </span><br></br>
-                  <span className="hljs-attribute"> fallback </span>: <span className="hljs-string">{short.android?.fallback} </span><br></br>
-                  <span className="hljs-attribute">web </span>: <span className="hljs-string">{short.web} </span>
+                  <span className="hljs-attribute"> primary </span>:{' '}
+                  <span className="hljs-string">{short.android?.primary} </span>
+                  <br></br>
+                  <span className="hljs-attribute"> fallback </span>:{' '}
+                  <span className="hljs-string">{short.android?.fallback} </span>
+                  <br></br>
+                  <span className="hljs-attribute">web </span>:{' '}
+                  <span className="hljs-string">{short.web} </span>
                 </code>
               </pre>
             ))}
           </div>
-
         </div>
       </>
-    )
+    );
   }
-}
+};
 
+ListShortLinks.propTypes = {
+  shortlinks: PropTypes.array
+};
+ListShortLinks.defaultProps = {
+  shortlinks: []
+};
