@@ -14,7 +14,7 @@ $ sudo pip3 install -r requirments
 then install reactjs
 ```sh
 $ sudo apt install npm
-
+```
 ### Run the Project
 
 ```sh
