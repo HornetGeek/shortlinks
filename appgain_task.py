@@ -1,5 +1,6 @@
 # using flask_restful
 import json
+from unittest import result
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from flask_pymongo import PyMongo
@@ -38,7 +39,7 @@ class shortlinks(Resource):
             slug = data['slug']
             
             if(len(list(mongo.db.shortlinks.find({'slug':slug}))) == 1):
-                return jsonify({'Error': "change the slug"})
+                return {'Error': "change the slug"},403
            
         except:
 
@@ -49,7 +50,7 @@ class shortlinks(Resource):
             android = data['android']
             web = data['web']
         except:
-            return jsonify({'Error': "please add ios,android,web"})
+            return {'Error': "please add ios,android,web"}, 403
 
         mongo.db.shortlinks.insert_one({"slug":slug,"ios":ios,"android":android,"web":web})
         
@@ -68,7 +69,7 @@ class shortlinks_slug(Resource):
         for d in data:
             if d == "slug":
                 if data[str(d)] != slug:
-                    return jsonify({'Error': "the slug is readonly once it’s been created, this means it can’t be update."})
+                    return {'Error': "the slug is readonly once it’s been created, this means it can’t be update."},403
 
             return_data = mongo.db.shortlinks.find_one_and_update(
                 {"slug":slug},
