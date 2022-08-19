@@ -1,0 +1,10 @@
+.action h4.action-heading .name {
+    float: right;
+    font-weight: normal
+  }
+
+  .action{
+    width: 50%;
+    margin: auto;
+    align-items: center;
+  }

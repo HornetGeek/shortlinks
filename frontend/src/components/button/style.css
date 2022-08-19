@@ -1,0 +1,14 @@
+.d-flex {
+    display: flex !important;
+    margin-top: 5%;
+}
+.align-items-center {
+    align-items: center !important;
+}
+
+button, input, optgroup, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+}
